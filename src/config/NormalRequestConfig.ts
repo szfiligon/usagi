@@ -39,7 +39,7 @@ export const paths = {
         rate: {
             open: false,
             unit: 'seconds',
-            time: 3
+            time: 600
         },
         extract: (data: any) : NewsType[] => {
             try {
@@ -48,7 +48,7 @@ export const paths = {
                         title: v.title,
                         content: v.brief,
                         link: v.jump_url,
-                        from: 'cailianshe',
+                        from: '财联社',
                         time: Date.now()
                     }
                 })
@@ -99,7 +99,7 @@ export const paths = {
         rate: {
             open: true,
             unit: 'seconds',
-            time: 3
+            time: 600
         },
         extract: (data: any[]) => {
             try {
@@ -108,7 +108,7 @@ export const paths = {
                         title: v.title,
                         content: v.content,
                         link: v.link,
-                        from: 'caixin_finance',
+                        from: '财新网-金融',
                         time: Date.now()
                     }
                 })
@@ -159,7 +159,7 @@ export const paths = {
         rate: {
             open: true,
             unit: 'seconds',
-            time: 3
+            time: 600
         },
         extract: (data: any[]) => {
             try {
@@ -168,7 +168,54 @@ export const paths = {
                         title: v.title,
                         content: v.content,
                         link: v.link,
-                        from: 'caixin_economy',
+                        from: '财新网-经济',
+                        time: Date.now()
+                    }
+                })
+            } catch (err) {
+                console.log("Data extract error\r\n: ", err, "\r\n", data, "\r\n")
+                return []
+            }
+        }
+    },
+    tonghuashun: {
+        /**
+         * https://news.10jqka.com.cn/realtimenews.html
+         */
+        http: {
+            url: 'https://news.10jqka.com.cn/tapp/news/push/stock/?page=1&tag=&track=website&pagesize=10',
+            method: 'GET',
+            headers: {
+                'Accept': '*/*',
+                'Accept-Language': 'en,en-GB;q=0.9,en-US;q=0.8,zh-CN;q=0.7,zh;q=0.6',
+                'Connection': 'keep-alive',
+                'Cookie': 'Hm_lvt_722143063e4892925903024537075d0d=1733629908; HMACCOUNT=74AA8C3F1FDD5CBB; Hm_lvt_929f8b362150b1f77b477230541dbbc2=1733629908; Hm_lvt_78c58f01938e4d85eaf619eae71b4ed1=1733629908; log=; Hm_lpvt_722143063e4892925903024537075d0d=1733636424; Hm_lpvt_929f8b362150b1f77b477230541dbbc2=1733636424; Hm_lpvt_78c58f01938e4d85eaf619eae71b4ed1=1733636424; v=A5FeJ8FZkvU2zf7h0lliVRGYoJYu_gVwr3KphHMmjdh3Gr9Iu04VQD_CuVEA',
+                'Referer': 'https://news.10jqka.com.cn/realtimenews.html',
+                'Sec-Fetch-Dest': 'empty',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Site': 'same-origin',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0',
+                'X-Requested-With': 'XMLHttpRequest',
+                'hexin-v': 'A5FeJ8FZkvU2zf7h0lliVRGYoJYu_gVwr3KphHMmjdh3Gr9Iu04VQD_CuVEA',
+                'sec-ch-ua': '"Microsoft Edge";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"'
+              },
+            type: FetchType.NORMAL,
+        },
+        rate: {
+            open: true,
+            unit: 'seconds',
+            time: 10
+        },
+        extract: (data: any) => {
+            try {
+                return data.data.list.map((v: any) => {
+                    return {
+                        title: v.title,
+                        content: v.digest,
+                        link: v.url,
+                        from: '同花顺',
                         time: Date.now()
                     }
                 })
