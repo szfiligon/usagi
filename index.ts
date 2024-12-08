@@ -1,5 +1,5 @@
 // load
 
-import {PathRequestCron} from "./src/cron/PathRequestCron.ts";
+import { EntryCron } from "./src/cron/EntryCron";
 
-new PathRequestCron().task()
+new EntryCron().task()
