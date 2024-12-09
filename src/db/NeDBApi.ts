@@ -14,7 +14,6 @@ export class NeDBApi<T> implements DbApi<T> {
   private db: Datastore;
 
   constructor(filename:string) {
-    console.log(filename)
     this.db= new Datastore({  filename, autoload: true });
     this.db.persistence.setAutocompactionInterval(60000) // ms
   }

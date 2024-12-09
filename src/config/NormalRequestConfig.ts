@@ -37,7 +37,7 @@ export const paths = {
             }
         },
         rate: {
-            open: false,
+            open: true,
             unit: 'seconds',
             time: 600
         },

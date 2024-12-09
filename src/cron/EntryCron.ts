@@ -31,7 +31,7 @@ export class EntryCron implements BaseCron {
     }
 
     task() {
-        cron.schedule("*/1 * * * * *", () => {
+        cron.schedule("*/1 * * * * *", async () => {
             for (const key in paths) {
                 try {
                     const { http, rate, extract } = paths[key as keyof typeof paths];
@@ -42,9 +42,11 @@ export class EntryCron implements BaseCron {
                     }
                     const type = (http as HttpFields).type
                     if (type == FetchType.HTML) {
-                        PageReader.fetchHTML(http as HttpFields).then((r) => this.doMsgSaveAndSlack(extract(r)));
+                        const data = await PageReader.fetchHTML(http as HttpFields)
+                        this.doMsgSaveAndSlack(extract(data))
                     } else {
-                        PageReader.fetchByConfig(http as HttpFields).then((r) => this.doMsgSaveAndSlack(extract(r)));
+                        const data = await PageReader.fetchByConfig(http as HttpFields)
+                        this.doMsgSaveAndSlack(extract(data))
                     }
                     this.map.set(key, Date.now());
                 } catch (err) {
@@ -92,5 +94,3 @@ export class EntryCron implements BaseCron {
         })
     }
 }
-
-new EntryCron().task();

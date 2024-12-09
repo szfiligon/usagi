@@ -6,8 +6,8 @@ import type { CssConfig } from '../constants/CssConfig.ts';
 
 export class PageReader {
     static async fetchHTML(http: HttpFields): Promise<any[]> {
+        const { url, css, pageSize } = http
         try {
-            const { css, pageSize } = http
             if (!css) { 
                 throw new Error('CSS configuration is missing'); 
             }
@@ -48,15 +48,15 @@ export class PageReader {
 
     static async fetchByConfig(http: HttpFields) {
         const { url, method, headers, params, data } = http
-        console.log('Fetching url: ', url)
-        const config: AxiosRequestConfig = { url: url, method: method, headers: headers, };
-        if (method === 'GET' && params) {
-            config.params = params;
-        }
-        if (method === 'POST' && data) {
-            config.data = data;
-        }
         try {
+            console.log('Start fetching url: ', url)
+            const config: AxiosRequestConfig = { url: url, method: method, headers: headers, };
+            if (method === 'GET' && params) {
+                config.params = params;
+            }
+            if (method === 'POST' && data) {
+                config.data = data;
+            }
             const response = await axios(config);
             if (response.status != HttpStatusCode.Ok) {
                 console.error(`Request failed, msg: `, JSON.stringify(response));
