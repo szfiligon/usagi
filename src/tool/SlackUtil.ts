@@ -6,7 +6,7 @@ const axios = require('axios');
 /**
  * https://api.slack.com/apps/A04V5CWPQNP/incoming-webhooks?
  */
-const webhookURL = 'https://hooks.slack.com/services/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';
+const webhookURL = 'https://hooks.slack.com/services/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';
 
 export class SlackUtil {
     static async sendMessage(msg: NewsType): Promise<void> {
